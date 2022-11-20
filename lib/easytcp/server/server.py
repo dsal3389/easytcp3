@@ -1,5 +1,5 @@
 import asyncio
-from typing import Tuple, Type
+from typing import Tuple, Type, Any
 from easytcp.core.hooks import HookFactory
 from .components.user import UserBase, User as BuiltinUser
 
@@ -57,7 +57,7 @@ class Server:
             lambda *args, **kwargs: self._on_message_hanler(user=user, *args, **kwargs)
         ))
     
-    async def _on_message_handler(self, message):
+    async def _on_message_handler(self, message: Any) -> None:
         await self.hook.call(on_message, user=user, message=message)
 
 

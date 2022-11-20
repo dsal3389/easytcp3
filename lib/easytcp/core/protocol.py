@@ -27,14 +27,21 @@ class Protocol:
                 break
             await callback(data)
 
-    async def send(self, data: Union[bytes, str]) -> None:
-        if isinstance(data, str):
-            data = bytes(data, encoding="utf-8")
-
+    async def send(self, data: str, drain=True) -> None:
+        data = self.parse_send_data(data)
         self._writer.write(data)
-        await self._writer.drain()
+
+        if drain:
+            await self._writer.drain()
 
     async def recv(self, size=-1) -> bytes:
-        return await self._reader.read(size)
+        data = await self._reader.read(size)
+        return self.parse_recv_data(data)
+
+    def parse_send_data(self, data: str) -> bytes:
+        return bytes(data, encoding="utf-8")
+
+    def parse_recv_data(self, data: bytes) -> Any:
+        return str(bytes, encoding='utf-8')
 
 
