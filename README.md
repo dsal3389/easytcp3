@@ -45,5 +45,5 @@ async def custom_hook(user):
 
 
 ### builtin hooks
-for now at the time of writing, I am still if I event want to use
+for now at the time of writing, I am still wondering if I event want to use
 hooks for some events
